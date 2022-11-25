@@ -2,8 +2,11 @@
 #include "Level.h"
 #include <math.h>
 
+static Bullet shoot[10] = { 0 };
+
 void Player::update()
 {
+    //Movement
     if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT))
     {
         rotation -= 2;
@@ -12,12 +15,18 @@ void Player::update()
     {
         rotation += 2;
     }
+
+    //Shooting
+    if (IsKeyPressed(KEY_SPACE))
+    {
+
+    }
 }
 
 void Player::render()
 {
-    float PLAYER_BASE_SIZE = 40.0f;
-    int shipHeight = (PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD);
+    int PLAYER_BASE_SIZE = 40;
+    int shipHeight = (int)((PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD));
 
     Vector2 v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
     Vector2 v2 = { (GetScreenWidth() / 2) - cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) - sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
