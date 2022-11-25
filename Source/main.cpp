@@ -22,6 +22,23 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "C:\Users\nilsh\Desktop\raylib_template\Level.h"
+
+void update(Level* level)
+{
+    level->update();
+}
+
+void render(Level* level)
+{
+    level->render();
+}
+
+void process_game_frame(Level* level)
+{
+    update(level);
+    render(level);
+}
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -38,6 +55,10 @@ int main(void)
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
+    Level level{ /*Vector2{(float)get_window_width(), (float)get_window_height()}*/ };
+
+    level.reset();
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -50,9 +71,10 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        process_game_frame(&level);
+        //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
