@@ -1,5 +1,16 @@
 #pragma once
-#include "Player.h"
+
+class Player
+{
+public:
+	int rotation = 0;
+	int score = 0;
+
+	virtual ~Player() = default;
+
+	virtual void update();
+	virtual void render();
+};
 
 class Level
 {

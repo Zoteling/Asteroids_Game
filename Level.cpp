@@ -3,14 +3,14 @@
 
 void Level::update()
 {
-	//time_from_start += 1 / 60.f;
+	time_from_start += 1 / 60.f;
 
-	//player.update(this);
+	player.update();
 }
 
 void Level::render()
 {
-	//player.render(this);
+	player.render();
 }
 
 void Level::reset()
