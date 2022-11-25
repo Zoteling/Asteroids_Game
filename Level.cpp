@@ -16,4 +16,5 @@ void Level::render()
 void Level::reset()
 {
 	player = {};
+	player.initialize();
 }

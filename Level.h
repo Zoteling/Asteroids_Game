@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 
 struct Bullet
 {
@@ -17,10 +18,10 @@ class Player
 	public:
 		int rotation = 0;
 		int score = 0;
-		int max_bullets;
 
 		virtual ~Player() = default;
 
+		virtual void initialize();
 		virtual void update();
 		virtual void render();
 };
