@@ -1,15 +1,28 @@
 #pragma once
 
+struct Bullet
+{
+	public:
+		Vector2 position;
+		Vector2 speed;
+		float radius;
+		float player_rotation_when_shot;
+		int lifeSpawn;
+		bool active;
+		Color color;
+};
+
 class Player
 {
-public:
-	int rotation = 0;
-	int score = 0;
+	public:
+		int rotation = 0;
+		int score = 0;
+		int max_bullets;
 
-	virtual ~Player() = default;
+		virtual ~Player() = default;
 
-	virtual void update();
-	virtual void render();
+		virtual void update();
+		virtual void render();
 };
 
 class Level
