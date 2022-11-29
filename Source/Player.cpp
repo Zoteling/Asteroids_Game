@@ -41,6 +41,7 @@ void Player::update()
             if (!bullets[i].active)
             {
                 /* Fix so that this is ship height variable*///40.0f
+                /*Fix cringe*/
                 int PLAYER_BASE_SIZE = 40;
                 int shipHeight = (int)((PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD));
                 Vector2 pos_of_v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
@@ -100,6 +101,6 @@ void Player::render()
     // Draw shoot
     for (int i = 0; i < max_bullets; i++)
     {
-        if (bullets[i].active) DrawCircleV(bullets[i].position, bullets[i].radius, WHITE);
+        if (bullets[i].active) DrawCircleV(bullets[i].position, bullets[i].radius, color);
     }
 }
