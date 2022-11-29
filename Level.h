@@ -17,7 +17,7 @@ class Player
 	public:
 		int rotation = 0;
 		int score = 0;
-		int max_bullets;
+		
 
 		virtual ~Player() = default;
 
@@ -38,3 +38,20 @@ class Level
 		void update();
 		void render();
 };
+
+
+class Meteor 
+{
+public: 
+
+
+	virtual ~Meteor() = default; 
+
+	virtual void update();
+	virtual void render(); 
+	virtual void reset(); 
+
+};
+
+
+

@@ -33,3 +33,5 @@ void Player::render()
     Vector2 v3 = { (GetScreenWidth() / 2) + cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) + sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
     DrawTriangle(v1, v2, v3, GREEN);
 }
+
+
