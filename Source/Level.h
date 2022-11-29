@@ -18,7 +18,7 @@ class Player
 	public:
 		int rotation = 0;
 		int score = 0;
-		Color color = GREEN;
+		Color color = RAYWHITE;
 
 		virtual ~Player() = default;
 

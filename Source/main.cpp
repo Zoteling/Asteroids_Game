@@ -23,57 +23,67 @@
 
 #include "raylib.h"
 #include "Level.h"
-
+#include <string>
 #include <stack>
 
-//enum class State
-//{
-//    MAIN_MENU,
-//    GAME
-//};
-//
-//std::stack<State> states;
-//
-//void main_menu()
-//{
-//    const Vector2i button_size = Vector2i(300, 64);
-//    const int button_margin_y = 10;
-//    const int button_count = 3;
-//
-//    Rectangle2i button_rect;
-//    button_rect.min = (get_window_size() - button_size * Vector2i(1, button_count) - Vector2i(0, button_count - 1) * button_margin_y) / 2;
-//    button_rect.size = button_size;
-//
-//    if (gui_button(button_rect, "PLAY"))
-//    {
-//        states.push(State::GAME);
-//    }
-//    button_rect.min.y += button_size.y + button_margin_y;
-//
-//    if (gui_button(button_rect, "OPTIONS"))
-//    {
-//        states.push(State::OPTIONS);
-//    }
-//
-//    button_rect.min.y += button_size.y + button_margin_y;
-//
-//    if (gui_button(button_rect, "EXIT"))
-//    {
-//        close_window();
-//    }
+enum class State
+{
+    MAIN_MENU,
+    GAME,
+    END_GAME
+};
 
+State current_state;
+static int score = 0;
+
+void process_main_menu()
+{
+    DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
+    DrawText("PRESS ENTER TO PLAY", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
+
+    if (IsKeyPressed(KEY_ENTER))
+    {
+        current_state = State::GAME;
+    }
+
+}
+
+void process_end_game()
+{
+    DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
+    DrawText(TextFormat("Score: %i", score), GetScreenWidth() / 2 - 165, 180, 80, RAYWHITE);
+    DrawText("PRESS ENTER TO RETRY", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
+
+    if (IsKeyPressed(KEY_ENTER))
+    {
+        score = 0;
+        current_state = State::GAME;
+    }
+
+}
 
 void update(Level* level)
 {
+    if (IsKeyPressed(KEY_ENTER))
+    {
+        score++;
+    }
+
+    if (IsKeyPressed(KEY_K))
+    {
+        current_state = State::END_GAME;
+        level->reset();
+    }
     level->update();
 }
 
 void render(Level* level)
 {
+    DrawText(TextFormat("Score: %i", score), 20, 20, 40, RAYWHITE);
     level->render();
 }
 
-void process_game_frame(Level* level)
+void process_game(Level* level)
 {
     update(level);
     render(level);
@@ -86,8 +96,9 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
+    
+    const int screenWidth = 1200;//GetScreenWidth() * .5f;
+    const int screenHeight = 800;//GetScreenHeight() * .5f;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -108,25 +119,25 @@ int main(void)
 
         // Draw
         //----------------------------------------------------------------------------------
-
-       /* State current_state = states.top();
-
-        switch (current_state)
-        {
-        case State::MAIN_MENU:
-            do_main_menu_frame();
-            break;
-        case State::GAME:
-            do_game_frame(&level);
-            break;
-        }*/
-
         BeginDrawing();
 
 
-        ClearBackground(BLACK);
+        ClearBackground(GRAY);
+        
+        switch (current_state)
+        {
+            case State::MAIN_MENU:
+                process_main_menu();
+                break;
+            case State::GAME:
+                process_game(&level);
+                break;
+            case State::END_GAME:
+                process_end_game();
+                break;
+        }
 
-        process_game_frame(&level);
+        //process_game_frame(&level);
         //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
