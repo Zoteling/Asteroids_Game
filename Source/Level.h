@@ -43,18 +43,13 @@ class Level
 };
 
 
-class Meteor 
+class Enemy 
 {
-public: 
-
-
-	virtual ~Meteor() = default; 
-
-	virtual void update();
-	virtual void render(); 
-	virtual void reset(); 
 
 };
+
+
+
 
 
 

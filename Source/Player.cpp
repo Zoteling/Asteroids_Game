@@ -5,6 +5,8 @@
 const int max_bullets = 20;
 static Bullet bullets[max_bullets] = { };
 
+
+
 void Player::initialize()
 {
     // Initialization of bullets
