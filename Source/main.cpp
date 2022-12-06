@@ -105,7 +105,7 @@ int main(void)
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
-    Level level{ /*Vector2{(float)get_window_width(), (float)get_window_height()}*/ };
+    Level level{};
 
     level.reset();
 
