@@ -13,10 +13,9 @@ void Asteroid::update(Asteroid* specific_asteroid)
 
 void Asteroid::render(Asteroid* specific_asteroid)
 {
-	if (level.big_asteroid[i].active) DrawCircleV(gigaMeteor[i].position, gigaMeteor[i].radius, RED);
+	/*if (level.big_asteroid[i].active) DrawCircleV(gigaMeteor[i].position, gigaMeteor[i].radius, RED);
 
-	else DrawCircleV(bigMeteor[i].position, bigMeteor[i].radius, Fade(DARKBLUE, 0.3f));
-
+	else DrawCircleV(bigMeteor[i].position, bigMeteor[i].radius, Fade(DARKBLUE, 0.3f));*/
 
 	/*for (int i = 0; i < MAX_MID_METEOR; i++)
 	{

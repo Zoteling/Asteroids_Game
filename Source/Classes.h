@@ -42,7 +42,7 @@ public:
 
 	Size size;
 
-	virtual void initialize();
+	virtual void initialize(Vector2 new_position, Vector2 new_speed, Vector2 new_radius, bool active_state);
 	virtual void update(Asteroid* specific_asteroid);
 	virtual void render(Asteroid* specific_asteroid);
 
@@ -72,9 +72,9 @@ class Asteroid
 		Color color;
 		bool active;
 
-		virtual void initialize();
-		virtual void update();
-		virtual void render();
+		virtual void initialize(Vector2 new_position, Vector2 new_speed, Vector2 new_radius, bool active_state);
+		virtual void update(Asteroid* specific_asteroid);
+		virtual void render(Asteroid* specific_asteroid);
 };
 
 
