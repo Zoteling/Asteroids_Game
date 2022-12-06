@@ -8,6 +8,11 @@ void Asteroid::initialize()
 
 void Asteroid::update(Asteroid* specific_asteroid)
 {
+	if (specific_asteroid->active) 
+	{
+		specific_asteroid->position.x += specific_asteroid->speed.x; 
+		specific_asteroid->position.y += specific_asteroid->speed.y; 
+	}
     
 }
 
