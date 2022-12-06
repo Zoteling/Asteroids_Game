@@ -22,6 +22,11 @@ void Level::update()
 
 	player.update();
 
+    for (int i = 0; i < big_asteroid_count; i++)
+    {
+        big_asteroids[i].update();
+    }
+
 }
 
 void Level::render()
