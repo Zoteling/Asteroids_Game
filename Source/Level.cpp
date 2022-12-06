@@ -5,16 +5,16 @@ const int max_big_asteroid_count = 4;
 const int max_medium_asteroid_count = 8;
 const int max_small_asteroid_count = 16;
 
+//Asteroids
+Asteroid big_asteroids[max_big_asteroid_count] = {};
+//Asteroid medium_asteroids[max_medium_asteroid_count];
+//Asteroid small_asteroids[max_small_asteroid_count];
+
 int big_asteroid_count;
 int medium_asteroid_count;
 int small_asteroid_count;
 
 const int asteroid_speed = 2;
-
-//Asteroids
-Asteroid big_asteroids[max_big_asteroid_count];
-Asteroid medium_asteroids[max_medium_asteroid_count];
-Asteroid small_asteroids[max_small_asteroid_count];
 
 void Level::update()
 {
@@ -30,8 +30,8 @@ void Level::render()
 
     //render asteroids
     for (int i = 0; i < max_big_asteroid_count; i++) big_asteroids[i].render();
-    for (int i = 0; i < max_medium_asteroid_count; i++) medium_asteroids[i].render();
-    for (int i = 0; i < max_medium_asteroid_count; i++) small_asteroids[i].render();
+    //for (int i = 0; i < max_medium_asteroid_count; i++) medium_asteroids[i].render();
+    //for (int i = 0; i < max_medium_asteroid_count; i++) small_asteroids[i].render();
 }
 
 void Level::reset()
@@ -81,7 +81,7 @@ void Level::reset()
     }
 
     //asteroids
-    for (int i = 0; i < max_medium_asteroid_count; i++)
+    /*for (int i = 0; i < max_medium_asteroid_count; i++)
     {
         medium_asteroids[i].position = Vector2(-100, -100);
         medium_asteroids[i].speed = Vector2(0, 0);
@@ -95,7 +95,7 @@ void Level::reset()
         small_asteroids[i].speed = Vector2(0, 0);
         small_asteroids[i].radius = 10;
         small_asteroids[i].active = false;
-    }
+    }*/
 
     big_asteroid_count = max_big_asteroid_count;
     medium_asteroid_count = 0;

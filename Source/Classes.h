@@ -50,10 +50,10 @@ enum Size { big, medium, small };
 class Asteroid
 {
 	public:
-		Vector2 position;
-		Vector2 speed;
-		float radius;
-		bool active;
+		Vector2 position = {};
+		Vector2 speed = {};
+		float radius = {};
+		bool active = {};
 
 		virtual ~Asteroid() = default;
 
@@ -63,7 +63,6 @@ class Asteroid
 		void update();
 		void render();
 };
-
 
 
 
