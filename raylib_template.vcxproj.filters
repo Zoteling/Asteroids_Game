@@ -24,12 +24,12 @@
     <ClCompile Include="Source\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
+    <ClCompile Include="Source\Asteroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Level.h">
+    <ClInclude Include="Source\Classes.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
