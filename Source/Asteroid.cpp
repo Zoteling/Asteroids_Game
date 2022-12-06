@@ -13,23 +13,35 @@ void Asteroid::update(Asteroid* specific_asteroid)
 
 void Asteroid::render(Asteroid* specific_asteroid)
 {
-	/*if (level.big_asteroid[i].active) DrawCircleV(gigaMeteor[i].position, gigaMeteor[i].radius, RED);
-
-	else DrawCircleV(bigMeteor[i].position, bigMeteor[i].radius, Fade(DARKBLUE, 0.3f));*/
-
-	/*for (int i = 0; i < MAX_MID_METEOR; i++)
+	switch (specific_asteroid->size)
 	{
-		if (midMeteor[i].active) DrawCircleV(midMeteor[i].position, midMeteor[i].radius, RED);
+		case big:
+		{
+			if (specific_asteroid->active) 
+			{
+				DrawCircleV(specific_asteroid->position, specific_asteroid->radius, RED); 
+			}
 
-		else DrawCircleV(midMeteor[i].position, mediumMeteor[i].radius, Fade(DARKBLUE, 0.3f));
+			break;
+		}
+		case medium:
+		{
+			if (specific_asteroid->active) 
+			{
+				DrawCircleV(specific_asteroid->position, specific_asteroid->radius, RED); 
+			}
+			break;
+		}
+		case small:
+		{
+			if (specific_asteroid->active) 
+			{
+				DrawCircleV(specific_asteroid->position, specific_asteroid->radius, RED); 
+			}
 
+			break;
+		}
 	}
 
-	for (int i = 0; i < MAX_SMOL_METEOR; i++)
-	{
-		if (smolMeteor[i].active) DrawCircleV(smolMeteor[i].position, smolMeteor[i].radius, RED);
-
-		else DrawCircleV(smolMeteor[i].position, smolMeteor[i].radius, Fade(DARKBLUE, 0.3f));
-	}*/
 }
 
