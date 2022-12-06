@@ -1,6 +1,6 @@
 #pragma once
 #include <math.h>
-#include "raylib.h"
+#include <raylib.h>
 
 struct Bullet
 {
@@ -20,13 +20,32 @@ class Player
 		int rotation = 0;
 		int score = 0;
 
-		Color color = RAYWHITE;
+		Color color = GREEN;
 
 		virtual ~Player() = default;
 
 		virtual void initialize();
 		virtual void update();
 		virtual void render();
+};
+
+enum Size { big, medium, small };
+
+class Asteroid
+{
+public:
+	Vector2 position;
+	Vector2 speed;
+	float radius;
+	Color color;
+	bool active;
+
+	Size size;
+
+	virtual void initialize();
+	virtual void update(Asteroid* specific_asteroid);
+	virtual void render(Asteroid* specific_asteroid);
+
 };
 
 class Level
@@ -50,10 +69,10 @@ class Asteroid
 		Vector2 position;
 		Vector2 speed;
 		float radius;
-		Color color = PURPLE;
+		Color color;
 		bool active;
 
-		virtual void initialize(Vector2 new_position, Vector2 new_speed, Vector2 new_radius, bool active_state);
+		virtual void initialize();
 		virtual void update();
 		virtual void render();
 };
