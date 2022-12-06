@@ -2,11 +2,6 @@
 #include "Classes.h"
 #include <math.h>
 
-const int max_bullets = 20;
-static Bullet bullets[max_bullets] = { };
-
-
-
 void Player::initialize()
 {
     // Initialization of bullets
@@ -86,45 +81,9 @@ void Player::update()
                 bullets[i].active = false;
                 bullets[i].lifeSpawn = 0;
             }
-
-            //Handle asteroid collissions
-            //for (int x = 0; x < max_big_asteroid_count; x++) check_for_bullet_asteroid_collisions(&bullets[i], &big_asteroids[x]);
-            //for (int x = 0; x < max_big_asteroid_count; x++) check_for_bullet_asteroid_collisions(&bullets[i], &medium_asteroids[x]);
-            //for (int x = 0; x < max_big_asteroid_count; x++) check_for_bullet_asteroid_collisions(&bullets[i], &small_asteroids[x]);
         }
     }
 }
-//
-//void check_for_bullet_asteroid_collisions(Bullet* bullet, Asteroid* asteroid)
-//{
-//    if (asteroid->active && CheckCollisionCircles(bullet->position, bullet->radius, asteroid->position, asteroid->radius))
-//    {
-//        //shoot[i].active = false;
-//        //shoot[i].lifeSpawn = 0;
-//        //bigMeteor[a].active = false;
-//        //destroyedMeteorsCount++;
-//
-//        //for (int j = 0; j < 2; j++)
-//        //{
-//        //    if (midMeteorsCount % 2 == 0)
-//        //    {
-//        //        mediumMeteor[midMeteorsCount].position = (Vector2){ bigMeteor[a].position.x, bigMeteor[a].position.y };
-//        //        mediumMeteor[midMeteorsCount].speed = (Vector2){ cos(shoot[i].rotation * DEG2RAD) * METEORS_SPEED * -1, sin(shoot[i].rotation * DEG2RAD) * METEORS_SPEED * -1 };
-//        //    }
-//        //    else
-//        //    {
-//        //        mediumMeteor[midMeteorsCount].position = (Vector2){ bigMeteor[a].position.x, bigMeteor[a].position.y };
-//        //        mediumMeteor[midMeteorsCount].speed = (Vector2){ cos(shoot[i].rotation * DEG2RAD) * METEORS_SPEED, sin(shoot[i].rotation * DEG2RAD) * METEORS_SPEED };
-//        //    }
-//
-//        //    mediumMeteor[midMeteorsCount].active = true;
-//        //    midMeteorsCount++;
-//        //}
-//        ////bigMeteor[a].position = (Vector2){-100, -100};
-//        //bigMeteor[a].color = RED;
-//        //a = MAX_BIG_METEORS;
-//    }    
-//}
 
 void Player::render()
 {
