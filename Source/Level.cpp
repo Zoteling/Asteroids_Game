@@ -26,6 +26,8 @@ void check_for_bullet_asteroid_collisions(Bullet* bullet, Asteroid* asteroid, Le
                 level->medium_asteroids[level->medium_asteroid_count].active = true;
                 level->medium_asteroid_count++;
             }
+
+            level->big_asteroid_count--;
         }
         else if (asteroid->size == medium)
         {
@@ -43,7 +45,10 @@ void check_for_bullet_asteroid_collisions(Bullet* bullet, Asteroid* asteroid, Le
                 level->small_asteroids[level->small_asteroid_count].active = true;
                 level->small_asteroid_count++;
             }
+
+            level->medium_asteroid_count--;
         }
+        else level->small_asteroid_count--;
     }
 }
 
@@ -56,12 +61,20 @@ void Level::update()
     for (int i = 0; i < big_asteroid_count; i++)
     {
         big_asteroids[i].update();
-
-        //Asteroid Bullet Collisions
         for (int x = 0; x < player.max_bullets; x++)
             if (big_asteroids[i].active && player.bullets[x].active) check_for_bullet_asteroid_collisions(&player.bullets[x], &big_asteroids[i], this);
+    }
+
+    for (int i = 0; i < medium_asteroid_count; i++)
+    {
+        medium_asteroids[i].update();
         for (int x = 0; x < player.max_bullets; x++)
             if (medium_asteroids[i].active && player.bullets[x].active) check_for_bullet_asteroid_collisions(&player.bullets[x], &medium_asteroids[i], this);
+    }
+
+    for (int i = 0; i < small_asteroid_count; i++)
+    {
+        small_asteroids[i].update();
         for (int x = 0; x < player.max_bullets; x++)
             if (small_asteroids[i].active && player.bullets[x].active) check_for_bullet_asteroid_collisions(&player.bullets[x], &small_asteroids[i], this);
     }
