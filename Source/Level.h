@@ -18,6 +18,7 @@ class Player
 	public:
 		int rotation = 0;
 		int score = 0;
+
 		Color color = GREEN;
 
 		virtual ~Player() = default;
@@ -40,3 +41,15 @@ class Level
 		void update();
 		void render();
 };
+
+
+class Enemy 
+{
+
+};
+
+
+
+
+
+

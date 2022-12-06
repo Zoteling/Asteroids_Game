@@ -100,6 +100,19 @@ int main(void)
     const int screenWidth = 1200;//GetScreenWidth() * .5f;
     const int screenHeight = 800;//GetScreenHeight() * .5f;
 
+    // menu stuff goes here (for later) 
+
+    bool IsCursorOnScreen(void);
+    {
+        return true; 
+    }
+
+    void cursor_update(void); 
+    {
+        EnableCursor(); 
+    }
+
+
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -116,6 +129,11 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
+
+        void cursor_update();
+        {
+            DisableCursor(); 
+        }
 
         // Draw
         //----------------------------------------------------------------------------------
