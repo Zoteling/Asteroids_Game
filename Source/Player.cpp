@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "Level.h"
+#include "Classes.h"
 #include <math.h>
 
 const int max_bullets = 20;
@@ -98,7 +98,7 @@ void Player::render()
     Vector2 v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
     Vector2 v2 = { (GetScreenWidth() / 2) - cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) - sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
     Vector2 v3 = { (GetScreenWidth() / 2) + cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) + sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
-    DrawTriangle(v1, v2, v3, GREEN);
+    DrawTriangle(v1, v2, v3, color);
 
     // Draw shoot
     for (int i = 0; i < max_bullets; i++)
