@@ -20,32 +20,13 @@ class Player
 		int rotation = 0;
 		int score = 0;
 
-		Color color = GREEN;
+		Color color = RAYWHITE;
 
 		virtual ~Player() = default;
 
 		virtual void initialize();
 		virtual void update();
 		virtual void render();
-};
-
-enum Size { big, medium, small };
-
-class Asteroid
-{
-public:
-	Vector2 position;
-	Vector2 speed;
-	float radius;
-	Color color;
-	bool active;
-
-	Size size;
-
-	virtual void initialize(Vector2 new_position, Vector2 new_speed, Vector2 new_radius, bool active_state);
-	virtual void update(Asteroid* specific_asteroid);
-	virtual void render(Asteroid* specific_asteroid);
-
 };
 
 class Level
@@ -57,11 +38,14 @@ class Level
 		Vector2 size;
 		float time_from_start = 0;
 
+		virtual ~Level() = default;
+
 		void reset();
 		void update();
 		void render();
 };
 
+enum Size { big, medium, small };
 
 class Asteroid
 {
@@ -69,12 +53,15 @@ class Asteroid
 		Vector2 position;
 		Vector2 speed;
 		float radius;
-		Color color;
 		bool active;
 
-		virtual void initialize(Vector2 new_position, Vector2 new_speed, Vector2 new_radius, bool active_state);
-		virtual void update(Asteroid* specific_asteroid);
-		virtual void render(Asteroid* specific_asteroid);
+		virtual ~Asteroid() = default;
+
+		Size size = Size::big;
+
+		//void initialize(Vector2 new_position, Vector2 new_speed, int new_radius, bool active_state, Size new_size);
+		void update();
+		void render();
 };
 
 

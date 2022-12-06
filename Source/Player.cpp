@@ -86,8 +86,16 @@ void Player::update()
                 bullets[i].active = false;
                 bullets[i].lifeSpawn = 0;
             }
+
+            //Handle asteroid collissions
+            check_for_bullet_asteroid_collisions();
         }
     }
+}
+
+void check_for_bullet_asteroid_collisions()
+{
+
 }
 
 void Player::render()
