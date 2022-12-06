@@ -1,20 +1,21 @@
 #include "raylib.h"
 #include "Classes.h"
 
-//Asteroids
 const int big_asteroid_count = 4;
 const int medium_asteroid_count = 8;
 const int small_asteroid_count = 16;
 
-static Asteroid bigMeteor[big_asteroid_count];
-static Asteroid mediumMeteor[medium_asteroid_count];
-static Asteroid smallMeteor[small_asteroid_count];
+//Asteroids
+Asteroid big_asteroid[big_asteroid_count];
+Asteroid medium_asteroid[medium_asteroid_count];
+Asteroid small_asteroid[small_asteroid_count];
 
 void Level::update()
 {
 	time_from_start += 1 / 60.f;
 
 	player.update();
+
 }
 
 void Level::render()
@@ -49,7 +50,7 @@ void Level::reset()
             else correctRange = true;
         }
 
-        bigMeteor[i].position = Vector2(posx, posy);
+        big_asteroid[i].position = Vector2(posx, posy);
 
         /*correctRange = false;
         velx = GetRandomValue(-METEORS_SPEED, METEORS_SPEED);
@@ -65,10 +66,10 @@ void Level::reset()
             else correctRange = true;
         }*/
 
-        bigMeteor[i].speed = Vector2(0, 0);
-        bigMeteor[i].radius = 40;
-        bigMeteor[i].active = true;
-        bigMeteor[i].color = PURPLE;
+        big_asteroid[i].speed = Vector2(0, 0);
+        big_asteroid[i].radius = 40;
+        big_asteroid[i].active = true;
+        big_asteroid[i].color = PURPLE;
     }
 
     ////asteroids

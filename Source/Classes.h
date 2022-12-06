@@ -29,6 +29,25 @@ class Player
 		virtual void render();
 };
 
+enum Size { big, medium, small };
+
+class Asteroid
+{
+public:
+	Vector2 position;
+	Vector2 speed;
+	float radius;
+	Color color;
+	bool active;
+
+	Size size;
+
+	virtual void initialize();
+	virtual void update(Asteroid* specific_asteroid);
+	virtual void render(Asteroid* specific_asteroid);
+
+};
+
 class Level
 {
 	public:
@@ -41,22 +60,6 @@ class Level
 		void reset();
 		void update();
 		void render();
-};
-
-
-class Asteroid 
-{
-public:
-	Vector2 position;
-	Vector2 speed;
-	float radius;
-	Color color;
-	bool active;
-
-	virtual void initialize();
-	virtual void update();
-	virtual void render();
-
 };
 
 
