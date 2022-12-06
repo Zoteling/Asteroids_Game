@@ -91,17 +91,6 @@ int main(void)
 
     // menu stuff goes here (for later) 
 
-    bool IsCursorOnScreen(void);
-    {
-        return true; 
-    }
-
-    void cursor_update(void); 
-    {
-        EnableCursor(); 
-    }
-
-
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -119,10 +108,7 @@ int main(void)
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
 
-        void cursor_update();
-        {
-            DisableCursor(); 
-        }
+        DisableCursor();
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -150,6 +136,8 @@ int main(void)
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
+
+    EnableCursor();
 
     // De-Initialization
     //--------------------------------------------------------------------------------------

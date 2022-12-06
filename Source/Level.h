@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <raylib.h>
 
 struct Bullet
 {
@@ -45,6 +46,25 @@ class Level
 
 class Enemy 
 {
+public: 
+	Camera camera = {}; 
+
+	Color color = RED; 
+
+	virtual ~Enemy() = default;
+	
+	virtual void initialize(); 
+	virtual void update();
+	virtual void render(); 
+	virtual void reset();
+
+
+private: 
+	Vector2 position;
+	Vector2 speed; 
+	float radius; 
+	bool active; 
+	Color color; 
 
 };
 
