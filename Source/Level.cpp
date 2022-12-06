@@ -20,6 +20,17 @@ void Level::update()
 void Level::render()
 {
 	player.render();
+
+    //render asteroids
+    for (int i = 0; i < big_asteroid_count; i++)
+    {
+
+    }
+
+    for (int i = 0; i < big_asteroid_count; i++)
+    {
+
+    }
 }
 
 void Level::reset()
@@ -29,27 +40,18 @@ void Level::reset()
     for (int i = 0; i < big_asteroid_count; i++)
     {
         int posx, posy;
-        bool correctRange = false;
 
-        posx = GetRandomValue(0, GetScreenWidth());
+        int random_x = GetRandomValue(0, 1);
+        if (random_x == 1) posx = GetRandomValue(0, GetScreenWidth() / 2 - 200);
+        else posx = GetRandomValue(GetScreenWidth() / 2 + 200, GetScreenWidth());
 
-        while (!correctRange)
-        {
-            if (posx > GetScreenWidth() / 2 - 150 && posx < GetScreenWidth() / 2 + 150) posx = GetRandomValue(0, GetScreenWidth());
-            else correctRange = true;
-        }
-
-        correctRange = false;
-
-        posy = GetRandomValue(0, GetScreenHeight());
-
-        while (!correctRange)
-        {
-            if (posy > GetScreenWidth() / 2 - 150 && posy < GetScreenWidth() / 2 + 150)  posy = GetRandomValue(0, GetScreenWidth());
-            else correctRange = true;
-        }
+        int random_y = GetRandomValue(0, 1);
+        if (random_y == 1) posy = GetRandomValue(0, GetScreenHeight() / 2 - 200);
+        else posy = GetRandomValue(GetScreenHeight() / 2 + 200, GetScreenHeight());
 
         bigMeteor[i].position = Vector2(posx, posy);
+
+        Asteroid = new Asteroid();
 
         /*correctRange = false;
         velx = GetRandomValue(-METEORS_SPEED, METEORS_SPEED);
@@ -65,6 +67,7 @@ void Level::reset()
             else correctRange = true;
         }*/
 
+        bigMeteor[i].speed = Vector2(0, 0);
         bigMeteor[i].speed = Vector2(0, 0);
         bigMeteor[i].radius = 40;
         bigMeteor[i].active = true;

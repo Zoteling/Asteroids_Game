@@ -50,10 +50,10 @@ class Asteroid
 		Vector2 position;
 		Vector2 speed;
 		float radius;
-		Color color;
+		Color color = PURPLE;
 		bool active;
 
-		virtual void initialize();
+		virtual void initialize(Vector2 new_position, Vector2 new_speed, Vector2 new_radius, bool active_state);
 		virtual void update();
 		virtual void render();
 };
