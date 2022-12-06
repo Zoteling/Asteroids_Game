@@ -1,14 +1,20 @@
 #include "raylib.h"
 #include "Classes.h"
 
-const int big_asteroid_count = 4;
-const int medium_asteroid_count = 8;
-const int small_asteroid_count = 16;
+const int max_big_asteroid_count = 4;
+const int max_medium_asteroid_count = 8;
+const int max_small_asteroid_count = 16;
+
+int big_asteroid_count;
+int medium_asteroid_count;
+int small_asteroid_count;
+
+const int asteroid_speed = 2;
 
 //Asteroids
-Asteroid big_asteroid[big_asteroid_count];
-Asteroid medium_asteroid[medium_asteroid_count];
-Asteroid small_asteroid[small_asteroid_count];
+Asteroid big_asteroids[max_big_asteroid_count];
+Asteroid medium_asteroids[max_medium_asteroid_count];
+Asteroid small_asteroids[max_small_asteroid_count];
 
 void Level::update()
 {
@@ -21,78 +27,79 @@ void Level::update()
 void Level::render()
 {
 	player.render();
+
+    //render asteroids
+    for (int i = 0; i < max_big_asteroid_count; i++) big_asteroids[i].render();
+    for (int i = 0; i < max_medium_asteroid_count; i++) medium_asteroids[i].render();
+    for (int i = 0; i < max_medium_asteroid_count; i++) small_asteroids[i].render();
 }
 
 void Level::reset()
 {
 	player = {};
 
-    for (int i = 0; i < big_asteroid_count; i++)
+    player.initialize();
+    /*big_asteroids[big_asteroid_count] = {};
+    medium_asteroids = {};
+    small_asteroids[small_asteroid_count] = {};*/
+
+    for (int i = 0; i < max_big_asteroid_count; i++)
     {
+        //Random position
         int posx, posy;
-        bool correctRange = false;
 
-        posx = GetRandomValue(0, GetScreenWidth());
+        int random_x = GetRandomValue(0, 1);
+        if (random_x == 1) posx = GetRandomValue(0, GetScreenWidth() / 2 - 200);
+        else posx = GetRandomValue(GetScreenWidth() / 2 + 200, GetScreenWidth());
 
-        while (!correctRange)
+        int random_y = GetRandomValue(0, 1);
+        if (random_y == 1) posy = GetRandomValue(0, GetScreenHeight() / 2 - 200);
+        else posy = GetRandomValue(GetScreenHeight() / 2 + 200, GetScreenHeight());
+
+        Vector2 position = Vector2((float)posx, (float)posy);
+
+        //Random rotation
+        int velx = 0;
+        int vely = 0;
+
+        while (!(velx == 0 && vely == 0))
         {
-            if (posx > GetScreenWidth() / 2 - 150 && posx < GetScreenWidth() / 2 + 150) posx = GetRandomValue(0, GetScreenWidth());
-            else correctRange = true;
+            velx = GetRandomValue(-asteroid_speed, asteroid_speed);
+            vely = GetRandomValue(-asteroid_speed, asteroid_speed);
         }
 
-        correctRange = false;
+        Vector2 speed = Vector2(velx, vely);
 
-        posy = GetRandomValue(0, GetScreenHeight());
+        Asteroid new_asteroid;
+        new_asteroid.position = position;
+        new_asteroid.speed = speed;
+        new_asteroid.active = true;
+        new_asteroid.radius = 40;
+        new_asteroid.size = Size::big;
 
-        while (!correctRange)
-        {
-            if (posy > GetScreenWidth() / 2 - 150 && posy < GetScreenWidth() / 2 + 150)  posy = GetRandomValue(0, GetScreenWidth());
-            else correctRange = true;
-        }
-
-        big_asteroid[i].position = Vector2(posx, posy);
-
-        /*correctRange = false;
-        velx = GetRandomValue(-METEORS_SPEED, METEORS_SPEED);
-        vely = GetRandomValue(-METEORS_SPEED, METEORS_SPEED);
-
-        while (!correctRange)
-        {
-            if (velx == 0 && vely == 0)
-            {
-                velx = GetRandomValue(-METEORS_SPEED, METEORS_SPEED);
-                vely = GetRandomValue(-METEORS_SPEED, METEORS_SPEED);
-            }
-            else correctRange = true;
-        }*/
-
-        big_asteroid[i].speed = Vector2(0, 0);
-        big_asteroid[i].radius = 40;
-        big_asteroid[i].active = true;
-        big_asteroid[i].color = PURPLE;
+        big_asteroids[i] = new_asteroid;
     }
 
-    ////asteroids
-    //for (int i = 0; i < MAX_MEDIUM_METEORS; i++)
-    //{
-    //    mediumMeteor[i].position = (Vector2){ -100, -100 };
-    //    mediumMeteor[i].speed = (Vector2){ 0,0 };
-    //    mediumMeteor[i].radius = 20;
-    //    mediumMeteor[i].active = false;
-    //    mediumMeteor[i].color = BLUE;
-    //}
+    //asteroids
+    for (int i = 0; i < max_medium_asteroid_count; i++)
+    {
+        medium_asteroids[i].position = Vector2(-100, -100);
+        medium_asteroids[i].speed = Vector2(0, 0);
+        medium_asteroids[i].radius = 20;
+        medium_asteroids[i].active = false;
+    }
 
-    //for (int i = 0; i < MAX_SMALL_METEORS; i++)
-    //{
-    //    smallMeteor[i].position = (Vector2){ -100, -100 };
-    //    smallMeteor[i].speed = (Vector2){ 0,0 };
-    //    smallMeteor[i].radius = 10;
-    //    smallMeteor[i].active = false;
-    //    smallMeteor[i].color = BLUE;
-    //}
+    for (int i = 0; i < max_small_asteroid_count; i++)
+    {
+        small_asteroids[i].position = Vector2(-100, -100);
+        small_asteroids[i].speed = Vector2(0, 0);
+        small_asteroids[i].radius = 10;
+        small_asteroids[i].active = false;
+    }
 
-    //midMeteorsCount = 0;
-    //smallMeteorsCount = 0;
+    big_asteroid_count = max_big_asteroid_count;
+    medium_asteroid_count = 0;
+    small_asteroid_count = 0;
 }
 
 
