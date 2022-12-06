@@ -44,27 +44,18 @@ class Level
 };
 
 
-class Enemy 
+class Asteroid 
 {
-public: 
-	Camera camera = {}; 
-
-	Color color = RED; 
-
-	virtual ~Enemy() = default;
-	
-	virtual void initialize(); 
-	virtual void update();
-	virtual void render(); 
-	virtual void reset();
-
-
-private: 
+public:
 	Vector2 position;
-	Vector2 speed; 
-	float radius; 
-	bool active; 
-	Color color; 
+	Vector2 speed;
+	float radius;
+	Color color;
+	bool active;
+
+	virtual void initialize();
+	virtual void update();
+	virtual void render();
 
 };
 
