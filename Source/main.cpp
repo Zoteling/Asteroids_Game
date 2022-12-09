@@ -48,15 +48,15 @@ void process_main_menu()
 
 }
 
-void process_end_game()
+void process_end_game(Level* level)
 {
     DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
-    DrawText(TextFormat("Score: %i", score), GetScreenWidth() / 2 - 165, 180, 80, RAYWHITE);
+    DrawText(TextFormat("Score: %i", level->score), GetScreenWidth() / 2 - 165, 180, 80, RAYWHITE);
     DrawText("PRESS ENTER TO RETRY", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
 
     if (IsKeyPressed(KEY_ENTER))
     {
-        score = 0;
+        level->score = 0;
         current_state = State::GAME;
     }
 
@@ -79,8 +79,8 @@ void update(Level* level)
 
 void render(Level* level)
 {
-    DrawText(TextFormat("Score: %i", score), 20, 20, 40, RAYWHITE);
     level->render();
+    DrawText(TextFormat("Score: %i", level->score), 20, 20, 40, RAYWHITE);
 }
 
 void process_game(Level* level)
@@ -137,7 +137,7 @@ int main(void)
                 process_game(&level);
                 break;
             case State::END_GAME:
-                process_end_game();
+                process_end_game(&level);
                 break;
         }
 
