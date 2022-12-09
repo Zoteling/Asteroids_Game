@@ -18,19 +18,19 @@ struct Bullet
 class Player
 {
 	public:
+		int player_base_height = 40;
 		int rotation = 0;
 		int score = 0;
-
+		int max_bullets = 20;
+		Bullet bullets[20] = { };
 		Color color = RAYWHITE;
+		Texture2D texture;
 
 		virtual ~Player() = default;
 
 		virtual void initialize();
 		virtual void update();
 		virtual void render();
-
-		int max_bullets = 20;
-		Bullet bullets[20] = { };
 };
 
 enum Size { big, medium, small };
@@ -46,39 +46,42 @@ class Asteroid
 		float radius = {};
 		Size size = Size::big;
 
-		//void initialize(Vector2 new_position, Vector2 new_speed, int new_radius, bool active_state, Size new_size);
 		void update();
 		void render();
-		void respawn();
 };
 
-//const int max_big_asteroid_count = 4;
-//const int max_medium_asteroid_count = 8;
-//const int max_small_asteroid_count = 16;
+enum class State
+{
+	main_menu,
+	game,
+	end_game
+};
+
+class GameState
+{
+	public:
+		State current_state;
+};
 
 class Level
 {
-public:
-	//Camera camera = {};
+	public:
+		Player player = {};
+		Vector2 size;
+		float time_from_start = 0;
+		const int asteroid_speed = 2;
+		int score = 0;
 
-	Player player = {};
-	Vector2 size;
-	float time_from_start = 0;
+		virtual ~Level() = default;
 
-	int score = 0;
+		void reset();
+		void update(GameState* state);
+		void render();
 
-	virtual ~Level() = default;
-
-	void reset();
-	void update();
-	void render();
-
-	//Asteroids
-	std::vector<Asteroid> big_asteroids;
-	std::vector<Asteroid> medium_asteroids;
-	std::vector<Asteroid> small_asteroids;
-
-	const int asteroid_speed = 2;
+		//Asteroids
+		std::vector<Asteroid> big_asteroids;
+		std::vector<Asteroid> medium_asteroids;
+		std::vector<Asteroid> small_asteroids;
 };
 
 

@@ -4,6 +4,8 @@
 
 void Player::initialize()
 {
+    texture = LoadTexture("Assets/Player.png");
+
     // Initialization of bullets
     for (int i = 0; i < max_bullets; i++)
     {
@@ -37,10 +39,7 @@ void Player::update()
         {
             if (!bullets[i].active)
             {
-                /* Fix so that this is ship height variable*///40.0f
-                /*Fix cringe*/
-                int PLAYER_BASE_SIZE = 40;
-                int shipHeight = (int)((PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD));
+                int shipHeight = (int)((player_base_height / 2) / tanf(20 * DEG2RAD));
                 Vector2 pos_of_v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
 
                 bullets[i].position = Vector2(pos_of_v1.x, pos_of_v1.y);
@@ -87,17 +86,23 @@ void Player::update()
 
 void Player::render()
 {
-    int PLAYER_BASE_SIZE = 40;
-    int shipHeight = (int)((PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD));
+    int shipHeight = (int)((player_base_height / 2) / tanf(20 * DEG2RAD));
 
     Vector2 v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
-    Vector2 v2 = { (GetScreenWidth() / 2) - cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) - sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
-    Vector2 v3 = { (GetScreenWidth() / 2) + cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) + sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
+    Vector2 v2 = { (GetScreenWidth() / 2) - cosf(rotation * DEG2RAD) * (player_base_height / 2), (GetScreenHeight() / 2) - sinf(rotation * DEG2RAD) * (player_base_height / 2) };
+    Vector2 v3 = { (GetScreenWidth() / 2) + cosf(rotation * DEG2RAD) * (player_base_height / 2), (GetScreenHeight() / 2) + sinf(rotation * DEG2RAD) * (player_base_height / 2) };
     DrawTriangle(v1, v2, v3, color);
+
+    /*Vector2 position = Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
+    Rectangle source = Rectangle(GetScreenWidth() / 2, GetScreenHeight() / 2, 40, 40);
+    Rectangle dest = Rectangle(GetScreenWidth() / 2, GetScreenHeight() / 2, 40, 40);
+
+    DrawTexturePro(texture, source, dest, position, rotation, WHITE);*/
+   // DrawTextureEx(texture, position, rotation, 2, WHITE);
 
     // Draw shoot
     for (int i = 0; i < max_bullets; i++)
     {
-        if (bullets[i].active) DrawCircleV(bullets[i].position, bullets[i].radius, color);
+        if (bullets[i].active) DrawCircleV(bullets[i].position, bullets[i].radius, GREEN);
     }
 }

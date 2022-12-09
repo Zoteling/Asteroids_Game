@@ -26,29 +26,19 @@
 #include <string>
 #include <stack>
 
-enum class State
-{
-    MAIN_MENU,
-    GAME,
-    END_GAME
-};
-
-State current_state;
-static int score = 0;
-
-void process_main_menu()
+void process_main_menu(GameState* state)
 {
     DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
     DrawText("PRESS ENTER TO PLAY", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
 
     if (IsKeyPressed(KEY_ENTER))
     {
-        current_state = State::GAME;
+        state->current_state = State::game;
     }
 
 }
 
-void process_end_game(Level* level)
+void process_end_game(GameState* state, Level* level)
 {
     DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
     DrawText(TextFormat("Score: %i", level->score), GetScreenWidth() / 2 - 165, 180, 80, RAYWHITE);
@@ -57,24 +47,19 @@ void process_end_game(Level* level)
     if (IsKeyPressed(KEY_ENTER))
     {
         level->score = 0;
-        current_state = State::GAME;
+        state->current_state = State::game;
     }
 
 }
 
-void update(Level* level)
+void update(GameState* state, Level* level)
 {
-    if (IsKeyPressed(KEY_ENTER))
-    {
-        score++;
-    }
-
     if (IsKeyPressed(KEY_K))
     {
-        current_state = State::END_GAME;
+        state->current_state = State::end_game;
         level->reset();
     }
-    level->update();
+    level->update(state);
 }
 
 void render(Level* level)
@@ -83,9 +68,9 @@ void render(Level* level)
     DrawText(TextFormat("Score: %i", level->score), 20, 20, 40, RAYWHITE);
 }
 
-void process_game(Level* level)
+void process_game(GameState* state, Level* level)
 {
-    update(level);
+    update(state, level);
     render(level);
 }
 
@@ -97,8 +82,8 @@ int main(void)
     // Initialization
     //--------------------------------------------------------------------------------------
     
-    const int screenWidth = 1200;//GetScreenWidth() * .5f;
-    const int screenHeight = 800;//GetScreenHeight() * .5f;
+    const int screenWidth = 1200;
+    const int screenHeight = 800;
 
     // menu stuff goes here (for later) 
 
@@ -108,7 +93,8 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     Level level{};
-
+    GameState state;
+    state.current_state = State::main_menu;
     level.reset();
 
     // Main game loop
@@ -128,16 +114,16 @@ int main(void)
 
         ClearBackground(GRAY);
         
-        switch (current_state)
+        switch (state.current_state)
         {
-            case State::MAIN_MENU:
-                process_main_menu();
+            case State::main_menu:
+                process_main_menu(&state);
                 break;
-            case State::GAME:
-                process_game(&level);
+            case State::game:
+                process_game(&state, &level);
                 break;
-            case State::END_GAME:
-                process_end_game(&level);
+            case State::end_game:
+                process_end_game(&state, &level);
                 break;
         }
 

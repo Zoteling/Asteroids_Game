@@ -19,18 +19,6 @@ Asteroid::Asteroid(Vector2 _position, Vector2 _speed, float _radius, Size _size)
 	this->size = _size;
 }
 
-//void Asteroid::respawn()
-//{
-//	int random = GetRandomValue(0, 3);
-//
-//	if(random == 0) position.x = -radius;
-//	if(random == 1) position.x = position.x = GetScreenWidth() + radius;
-//	if(random == 2) position.y = -radius;
-//	if(random == 3) position.y = GetScreenHeight() + radius;
-//
-//	//active = true;
-//}
-
 void Asteroid::render()
 {
 	switch (size)
