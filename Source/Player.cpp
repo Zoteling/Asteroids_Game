@@ -4,6 +4,9 @@
 
 void Player::initialize()
 {
+    texture = LoadTexture("Assets/Player.png");
+    texture_bullets = LoadTexture("Assets/Bullet.png");
+
     // Initialization of bullets
     for (int i = 0; i < max_bullets; i++)
     {
@@ -37,10 +40,7 @@ void Player::update()
         {
             if (!bullets[i].active)
             {
-                /* Fix so that this is ship height variable*///40.0f
-                /*Fix cringe*/
-                int PLAYER_BASE_SIZE = 40;
-                int shipHeight = (int)((PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD));
+                int shipHeight = (int)((player_base_height / 2) / tanf(20 * DEG2RAD));
                 Vector2 pos_of_v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
 
                 bullets[i].position = Vector2(pos_of_v1.x, pos_of_v1.y);
@@ -87,17 +87,19 @@ void Player::update()
 
 void Player::render()
 {
-    int PLAYER_BASE_SIZE = 40;
-    int shipHeight = (int)((PLAYER_BASE_SIZE / 2) / tanf(20 * DEG2RAD));
+    Vector2 position = Vector2(75 / 2, 75 / 2);
+    Rectangle source = Rectangle(0, 0, 98, 75);
+    Rectangle dest = Rectangle((GetScreenWidth() / 2) - (0 / 2), (GetScreenHeight() / 2) - (0 / 2), 75, 75);
 
-    Vector2 v1 = { (GetScreenWidth() / 2) + sinf(rotation * DEG2RAD) * (shipHeight), (GetScreenHeight() / 2) - cosf(rotation * DEG2RAD) * (shipHeight) };
-    Vector2 v2 = { (GetScreenWidth() / 2) - cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) - sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
-    Vector2 v3 = { (GetScreenWidth() / 2) + cosf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2), (GetScreenHeight() / 2) + sinf(rotation * DEG2RAD) * (PLAYER_BASE_SIZE / 2) };
-    DrawTriangle(v1, v2, v3, color);
+    DrawTexturePro(texture, source, dest, position, rotation, WHITE);
 
     // Draw shoot
     for (int i = 0; i < max_bullets; i++)
     {
-        if (bullets[i].active) DrawCircleV(bullets[i].position, bullets[i].radius, color);
+        Vector2 bullet_position = Vector2(48 / 2, 46 / 2);
+        Rectangle bullet_source = Rectangle(0, 0, 48, 46);
+        Rectangle bullet_dest = Rectangle(bullets[i].position.x, bullets[i].position.y, 32, 32);
+
+        if (bullets[i].active) DrawTexturePro(texture_bullets, bullet_source, bullet_dest, bullet_position, rotation, WHITE);
     }
 }

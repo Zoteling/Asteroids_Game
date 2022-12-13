@@ -9,6 +9,8 @@ void Asteroid::update()
 	else if (position.x < 0 - radius) position.x = GetScreenWidth() + radius;
 	if (position.y > GetScreenHeight() + radius) position.y = -(radius);
 	else if (position.y < 0 - radius) position.y = GetScreenHeight() + radius;
+
+	rotation += 1;
 }
 
 Asteroid::Asteroid(Vector2 _position, Vector2 _speed, float _radius, Size _size)
@@ -17,37 +19,48 @@ Asteroid::Asteroid(Vector2 _position, Vector2 _speed, float _radius, Size _size)
 	this->speed = _speed;
 	this->radius = _radius;
 	this->size = _size;
+	this->rotation = GetRandomValue(0, 360);
+	this->texture = LoadTexture("Assets/Asteroid.png");
 }
-
-//void Asteroid::respawn()
-//{
-//	int random = GetRandomValue(0, 3);
-//
-//	if(random == 0) position.x = -radius;
-//	if(random == 1) position.x = position.x = GetScreenWidth() + radius;
-//	if(random == 2) position.y = -radius;
-//	if(random == 3) position.y = GetScreenHeight() + radius;
-//
-//	//active = true;
-//}
 
 void Asteroid::render()
 {
 	switch (size)
 	{
+	
 		case big:
 		{
-			DrawCircleV(position, radius, RED);
+			int size = 160;
+			int half_size = 80;
+
+			Rectangle source = Rectangle(0, 0, 101, 84);
+			Rectangle dest = Rectangle(position.x, position.y, size, size);
+
+			DrawTexturePro(texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
+
 			break;
 		}
 		case medium:
 		{
-			DrawCircleV(position, radius, RED);
+			int size = 80;
+			int half_size = 40;
+
+			Rectangle source = Rectangle(0, 0, 101, 84);
+			Rectangle dest = Rectangle(position.x, position.y, size, size);
+
+			DrawTexturePro(texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
 			break;
 		}
 		case small:
 		{
-			DrawCircleV(position, radius, RED);
+			int size = 40;
+			int half_size = 20;
+
+			Rectangle source = Rectangle(0, 0, 101, 84);
+			Rectangle dest = Rectangle(position.x, position.y, size, size);
+
+			//DrawCircleV(position, radius, RED);
+			DrawTexturePro(texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
 			break;
 		}
 	}
