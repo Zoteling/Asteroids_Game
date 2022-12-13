@@ -25,6 +25,7 @@ class Player
 		Bullet bullets[20] = { };
 		Color color = RAYWHITE;
 		Texture2D texture;
+		Texture2D texture_bullets;
 
 		virtual ~Player() = default;
 
@@ -45,6 +46,8 @@ class Asteroid
 		Vector2 speed = {};
 		float radius = {};
 		Size size = Size::big;
+		Texture2D texture;
+		float rotation;
 
 		void update();
 		void render();

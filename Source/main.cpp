@@ -28,8 +28,9 @@
 
 void process_main_menu(GameState* state)
 {
-    DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
-    DrawText("PRESS ENTER TO PLAY", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
+    DrawText("Asteroids But Worse", GetScreenWidth() / 2 - 220, 20, 40, RAYWHITE);
+    DrawText("Press Enter To Play", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
+    DrawText("Controls: Space to shoot! Arrow Keys to rotate!", GetScreenWidth() / 2 - 260, GetScreenHeight() - 120, 20, RAYWHITE);
 
     if (IsKeyPressed(KEY_ENTER))
     {
@@ -40,9 +41,9 @@ void process_main_menu(GameState* state)
 
 void process_end_game(GameState* state, Level* level)
 {
-    DrawText("ASTEROIDS BUT WORSE", GetScreenWidth() / 2 - 250, 20, 40, RAYWHITE);
+    DrawText("Asteroids But Worse", GetScreenWidth() / 2 - 220, 20, 40, RAYWHITE);
     DrawText(TextFormat("Score: %i", level->score), GetScreenWidth() / 2 - 165, 180, 80, RAYWHITE);
-    DrawText("PRESS ENTER TO RETRY", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
+    DrawText("Press Enter To Retry", GetScreenWidth() / 2 - 125, GetScreenHeight() / 2, 20, RAYWHITE);
 
     if (IsKeyPressed(KEY_ENTER))
     {
@@ -112,7 +113,7 @@ int main(void)
         BeginDrawing();
 
 
-        ClearBackground(GRAY);
+        ClearBackground(BLACK);
         
         switch (state.current_state)
         {
