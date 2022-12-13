@@ -20,6 +20,7 @@ class Player
 	public:
 		int rotation = 0;
 		int score = 0;
+		int shipHeight; 
 
 		Color color = RAYWHITE;
 

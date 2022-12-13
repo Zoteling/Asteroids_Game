@@ -33,7 +33,7 @@ enum class State
     END_GAME
 };
 
-State current_state;
+static State current_state;
 static int score = 0;
 
 void process_main_menu()
@@ -64,16 +64,6 @@ void process_end_game(Level* level)
 
 void update(Level* level)
 {
-    if (IsKeyPressed(KEY_ENTER))
-    {
-        score++;
-    }
-
-    if (IsKeyPressed(KEY_K))
-    {
-        current_state = State::END_GAME;
-        level->reset();
-    }
     level->update();
 }
 

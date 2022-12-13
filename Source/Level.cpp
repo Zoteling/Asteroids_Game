@@ -177,6 +177,18 @@ void check_if_any_asteroid_is_out_of_bounds(Asteroid* asteroid, std::vector<Aste
             asteroids->erase(asteroids->begin() + index);
 }
 
+void player_asteroid_collision(Player* player, Asteroid* asteroid, Level* level) 
+{
+    Vector2 player_position = Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
+
+    if (CheckCollisionCircles(player_position, player->rotation, asteroid->position, asteroid->radius))
+    {
+        current_state = State::END_GAME;
+        level->reset();
+    }
+
+}
+
 void Level::update()
 {
 	time_from_start += 1 / 60.f;
@@ -217,11 +229,71 @@ void Level::reset()
 	player = {};
 
     player.initialize();
-
     //also delete
     big_asteroids.clear();
     medium_asteroids.clear();
     small_asteroids.clear();
+
+    for (int i = 0; i < 10; i++)
+    {
+        //Random position
+        int posx, posy;
+
+        int random_x = GetRandomValue(0, 1);
+        if (random_x == 1) posx = GetRandomValue(0, GetScreenWidth() / 2 - 200);
+        else posx = GetRandomValue(GetScreenWidth() / 2 + 200, GetScreenWidth());
+
+        int random_y = GetRandomValue(0, 1);
+        if (random_y == 1) posy = GetRandomValue(0, GetScreenHeight() / 2 - 200);
+        else posy = GetRandomValue(GetScreenHeight() / 2 + 200, GetScreenHeight());
+
+        Vector2 position = Vector2((float)posx, (float)posy);
+
+        //Random rotation
+        int velx = 0;
+        int vely = 0;
+
+        while ((velx == 0 && vely == 0))
+        {
+            velx = GetRandomValue(-asteroid_speed, asteroid_speed);
+            vely = GetRandomValue(-asteroid_speed, asteroid_speed);
+        }
+
+        Vector2 speed = Vector2(velx, vely);
+
+        Asteroid new_asteroid{position, speed, 80, Size::big };
+        
+        big_asteroids.push_back(new_asteroid);
+    }
+
+    //Handle asteroid collissions
+    //for (int x = 0; x < max_big_asteroid_count; x++) check_for_bullet_asteroid_collisions(&bullets[i], &level->big_asteroids[x]);
+    //for (int x = 0; x < max_big_asteroid_count; x++) check_for_bullet_asteroid_collisions(&bullets[i], &medium_asteroids[x]);
+    //for (int x = 0; x < max_big_asteroid_count; x++) check_for_bullet_asteroid_collisions(&bullets[i], &small_asteroids[x]);
+
+
+    //asteroids
+    for (int i = 0; i < max_medium_asteroid_count; i++)
+    {
+        Asteroid new_asteroid;
+        new_asteroid.position = Vector2(-100, -100);
+        new_asteroid.speed = Vector2(0, 0);
+        new_asteroid.radius = 40;
+        new_asteroid.size = Size::medium;
+
+        medium_asteroids[i] = new_asteroid;
+    }
+
+    for (int i = 0; i < max_small_asteroid_count; i++)
+    {
+        Asteroid new_asteroid;
+        new_asteroid.position = Vector2(-100, -100);
+        new_asteroid.speed = Vector2(0, 0);
+        new_asteroid.radius = 20;
+        new_asteroid.active = false;
+        new_asteroid.size = Size::small;
+    }
+
 
     //starting big asteroids
     for (int i = 0; i < 4; i++) spawn_asteroid(&big_asteroids, 80);
