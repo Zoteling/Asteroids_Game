@@ -30,3 +30,13 @@ Both members:
 - Player class
 - Audio
 - Project structure
+
+Understanding Codebase:
+- Classes.h contains all the games classes and structs
+- Main.cpp handles menus and game states and passes along update and render functionality to Level.cpp 
+  It also handles texture and audio loading and unloading
+- Level.cpp handles passing update and rendering functionality to all entities. 
+  It also handles all collisions and asteroid spawning
+- Player.cpp contains movement logic and the bullet/shooting logic. 
+  It also contains the initialization, rendering, and update logic of the player.
+- Asteroid.cpp contains the initialization, rendering, and update logic of an asteroid.
