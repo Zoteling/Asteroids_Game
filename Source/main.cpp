@@ -53,26 +53,26 @@ void process_end_game(GameState* state, Level* level)
 
 }
 
-void update(GameState* state, Level* level)
+void update(GameState* state, Level* level, Sound sounds[3])
 {
     if (IsKeyPressed(KEY_K))
     {
         state->current_state = State::end_game;
         level->reset();
     }
-    level->update(state);
+    level->update(state, sounds);
 }
 
-void render(Level* level)
+void render(Level* level, Texture2D textures[3])
 {
-    level->render();
+    level->render(textures);
     DrawText(TextFormat("Score: %i", level->score), 20, 20, 40, RAYWHITE);
 }
 
-void process_game(GameState* state, Level* level)
+void process_game(GameState* state, Level* level, Texture2D textures[3], Sound sounds[3])
 {
-    update(state, level);
-    render(level);
+    update(state, level, sounds);
+    render(level, textures);
 }
 
 //------------------------------------------------------------------------------------
@@ -86,17 +86,29 @@ int main(void)
     const int screenWidth = 1200;
     const int screenHeight = 800;
 
-    // menu stuff goes here (for later) 
-
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitAudioDevice();
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+
     //--------------------------------------------------------------------------------------
 
     Level level{};
     GameState state;
     state.current_state = State::main_menu;
     level.reset();
+
+    Texture2D player_texture = LoadTexture("Assets/Player.png");
+    Texture2D bullet_texture = LoadTexture("Assets/Bullet.png");
+    Texture2D asteroid_texture = LoadTexture("Assets/Asteroid.png");
+
+    Texture2D textures[3] = { player_texture, bullet_texture, asteroid_texture };
+
+    Sound shoot_sound = LoadSound("Assets/Shooting.ogg");
+    Sound asteroid_explosion_sound = LoadSound("Assets/AsteroidExplosion.ogg");
+    Sound player_death_sound = LoadSound("Assets/PlayerDeath.ogg");
+
+    Sound sounds[3] = { shoot_sound, asteroid_explosion_sound, player_death_sound };
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -121,7 +133,7 @@ int main(void)
                 process_main_menu(&state);
                 break;
             case State::game:
-                process_game(&state, &level);
+                process_game(&state, &level, textures, sounds);
                 break;
             case State::end_game:
                 process_end_game(&state, &level);
@@ -138,6 +150,13 @@ int main(void)
     EnableCursor();
 
     // De-Initialization
+    
+    UnloadTexture(player_texture);
+    UnloadTexture(bullet_texture);
+    UnloadTexture(asteroid_texture);
+
+    UnloadSound(shoot_sound);
+    
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------

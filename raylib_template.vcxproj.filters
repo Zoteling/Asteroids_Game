@@ -37,5 +37,16 @@
     <Image Include="Assets\Player.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\Bullet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Asteroid.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shooting.ogg" />
+    <None Include="Assets\AsteroidExplosion.ogg" />
+    <None Include="Assets\PlayerDeath.ogg" />
   </ItemGroup>
 </Project>

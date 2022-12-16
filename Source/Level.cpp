@@ -3,13 +3,13 @@
 
 void spawn_asteroid(std::vector<Asteroid>* asteroids_vector, int asteroid_radius)
 {
-    int diameter = asteroid_radius * 2;
+    float diameter = (float)asteroid_radius * 2.0f;
 
     //spawned position
-    int posx, posy;
+    float posx, posy;
 
-    posx = GetRandomValue(-200, GetScreenWidth() + 200);
-    posy = GetRandomValue(-200, GetScreenHeight() + 200);
+    posx = (float)GetRandomValue(-200, GetScreenWidth() + 200);
+    posy = (float)GetRandomValue(-200, GetScreenHeight() + 200);
 
     Rectangle asteroid_rec;
     asteroid_rec.width = diameter;
@@ -19,16 +19,16 @@ void spawn_asteroid(std::vector<Asteroid>* asteroids_vector, int asteroid_radius
 
     //map
     Rectangle map;
-    map.width = GetScreenWidth();
-    map.height = GetScreenHeight();
+    map.width = (float)GetScreenWidth();
+    map.height = (float)GetScreenHeight();
     map.x = 0;
     map.y = 0;
 
     //get position outside of map
     while (CheckCollisionRecs(map, asteroid_rec))
     {
-        posx = GetRandomValue(-200, GetScreenWidth() + 200);
-        posy = GetRandomValue(-200, GetScreenHeight() + 200);
+        posx = (float)GetRandomValue(-200, GetScreenWidth() + 200);
+        posy = (float)GetRandomValue(-200, GetScreenHeight() + 200);
 
         asteroid_rec.x = posx;
         asteroid_rec.y = posy;
@@ -40,12 +40,12 @@ void spawn_asteroid(std::vector<Asteroid>* asteroids_vector, int asteroid_radius
     int target_posx, target_posy;
 
     int random_x = GetRandomValue(0, 1);
-    if (random_x == 1) target_posx = GetRandomValue(0, GetScreenWidth() / 2 - diameter);
-    else target_posx = GetRandomValue(GetScreenWidth() / 2 + diameter, GetScreenWidth());
+    if (random_x == 1) target_posx = GetRandomValue(0, GetScreenWidth() / 2 - (int)diameter);
+    else target_posx = GetRandomValue(GetScreenWidth() / 2 + (int)diameter, GetScreenWidth());
 
     int random_y = GetRandomValue(0, 1);
-    if (random_y == 1) target_posy = GetRandomValue(0, GetScreenHeight() / 2 - diameter);
-    else target_posy = GetRandomValue(GetScreenHeight() / 2 + diameter, GetScreenHeight());
+    if (random_y == 1) target_posy = GetRandomValue(0, GetScreenHeight() / 2 - (int)diameter);
+    else target_posy = GetRandomValue(GetScreenHeight() / 2 + (int)diameter, GetScreenHeight());
 
     Vector2 target_position = Vector2((float)target_posx, (float)target_posy);
 
@@ -53,11 +53,11 @@ void spawn_asteroid(std::vector<Asteroid>* asteroids_vector, int asteroid_radius
     Vector2 speed = Vector2((position.x - target_position.x) * .002f, (position.y - target_position.y) * .002f);
 
     //spawn
-    Asteroid asteroid = Asteroid(position, speed, asteroid_radius, big);
+    Asteroid asteroid = Asteroid(position, speed, (float)asteroid_radius, big);
     asteroids_vector->push_back(asteroid);
 }
 
-void check_for_bullet_asteroid_collisions(Bullet bullets[], Level* level, Player* player)
+void check_for_bullet_asteroid_collisions(Bullet bullets[], Level* level, Player* player, Sound asteroid_explosion_sound)
 {
     for (int i = 0; i < player->max_bullets; i++)
     {
@@ -66,6 +66,8 @@ void check_for_bullet_asteroid_collisions(Bullet bullets[], Level* level, Player
         {
             if (CheckCollisionCircles(bullets[i].position, bullets[i].radius, level->big_asteroids[j].position, level->big_asteroids[j].radius) && bullets[i].active)
             {
+                PlaySoundMulti(asteroid_explosion_sound);
+
                 //Destroy bullets
                 bullets[i].active = false;
                 bullets[i].lifeSpawn = 0;
@@ -108,6 +110,8 @@ void check_for_bullet_asteroid_collisions(Bullet bullets[], Level* level, Player
         {
             if (CheckCollisionCircles(bullets[i].position, bullets[i].radius, level->medium_asteroids[j].position, level->medium_asteroids[j].radius) && bullets[i].active)
             {
+                PlaySoundMulti(asteroid_explosion_sound);
+
                 //Destroy bullets
                 bullets[i].active = false;
                 bullets[i].lifeSpawn = 0;
@@ -148,6 +152,8 @@ void check_for_bullet_asteroid_collisions(Bullet bullets[], Level* level, Player
         {
             if (CheckCollisionCircles(bullets[i].position, bullets[i].radius, level->small_asteroids[j].position, level->small_asteroids[j].radius) && bullets[i].active)
             {
+                PlaySoundMulti(asteroid_explosion_sound);
+
                 //Destroy bullets
                 bullets[i].active = false;
                 bullets[i].lifeSpawn = 0;
@@ -165,12 +171,13 @@ void check_for_bullet_asteroid_collisions(Bullet bullets[], Level* level, Player
     }
 }
 
-void player_asteroid_collision(Player* player, Asteroid* asteroid, Level* level, GameState*state)
+void player_asteroid_collision(Player* player, Asteroid* asteroid, Level* level, GameState*state, Sound player_death)
 {
-    Vector2 player_position = Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
+    Vector2 player_position = Vector2((float)(GetScreenWidth() / 2), (float)(GetScreenHeight() / 2));
 
-    if (CheckCollisionCircles(player_position, player->player_base_height / 2, asteroid->position, asteroid->radius))
+    if (CheckCollisionCircles(player_position, (float)(player->player_base_height / 2), asteroid->position, asteroid->radius))
     {
+        PlaySoundMulti(player_death);
         state->current_state = State::end_game;
         level->reset();
     }
@@ -188,42 +195,42 @@ void check_if_any_asteroid_is_out_of_bounds(Asteroid* asteroid, std::vector<Aste
             asteroids->erase(asteroids->begin() + index);
 }
 
-void Level::update(GameState* state)
+void Level::update(GameState* state, Sound sounds[3])
 {
 	time_from_start += 1 / 60.f;
 
-	player.update();
+	player.update(sounds[0]);
 
     for (int i = 0; i < big_asteroids.size(); i++)
     {
         big_asteroids[i].update();
         check_if_any_asteroid_is_out_of_bounds(&big_asteroids[i], &big_asteroids, i);
-        player_asteroid_collision(&player, &big_asteroids[i], this, state);
+        player_asteroid_collision(&player, &big_asteroids[i], this, state, sounds[2]);
     }
     for (int i = 0; i < medium_asteroids.size(); i++)
     {
         medium_asteroids[i].update();
         check_if_any_asteroid_is_out_of_bounds(&medium_asteroids[i], &medium_asteroids, i);
-        player_asteroid_collision(&player, &medium_asteroids[i], this, state);
+        player_asteroid_collision(&player, &medium_asteroids[i], this, state, sounds[2]);
     }
     for (int i = 0; i < small_asteroids.size(); i++)
     {
         small_asteroids[i].update();
         check_if_any_asteroid_is_out_of_bounds(&small_asteroids[i], &small_asteroids, i);
-        player_asteroid_collision(&player, &small_asteroids[i], this, state);
+        player_asteroid_collision(&player, &small_asteroids[i], this, state, sounds[2]);
     }
 
-    check_for_bullet_asteroid_collisions(player.bullets, this, &player);
+    check_for_bullet_asteroid_collisions(player.bullets, this, &player, sounds[1]);
 }
 
-void Level::render()
+void Level::render(Texture2D textures[3])
 {
-	player.render();
+	player.render(textures[0], textures[1]);
 
     //render asteroids
-    for (int i = 0; i < big_asteroids.size(); i++) big_asteroids[i].render();
-    for (int i = 0; i < medium_asteroids.size(); i++) medium_asteroids[i].render();
-    for (int i = 0; i < small_asteroids.size(); i++) small_asteroids[i].render();
+    for (int i = 0; i < big_asteroids.size(); i++) big_asteroids[i].render(textures[2]);
+    for (int i = 0; i < medium_asteroids.size(); i++) medium_asteroids[i].render(textures[2]);
+    for (int i = 0; i < small_asteroids.size(); i++) small_asteroids[i].render(textures[2]);
 }
 
 void Level::reset()
@@ -239,5 +246,3 @@ void Level::reset()
     //starting big asteroids
     for (int i = 0; i < 4; i++) spawn_asteroid(&big_asteroids, 80);
 }
-
-

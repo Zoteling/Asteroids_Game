@@ -4,9 +4,6 @@
 
 void Player::initialize()
 {
-    texture = LoadTexture("Assets/Player.png");
-    texture_bullets = LoadTexture("Assets/Bullet.png");
-
     // Initialization of bullets
     for (int i = 0; i < max_bullets; i++)
     {
@@ -19,7 +16,7 @@ void Player::initialize()
     }
 }
 
-void Player::update()
+void Player::update(Sound shooting_sound)
 {
     //Movement
     if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT))
@@ -34,6 +31,8 @@ void Player::update()
     //Shooting
     if (IsKeyPressed(KEY_SPACE))
     {
+        PlaySoundMulti(shooting_sound);
+
         float bullet_speed_multiplier = 10.0f;
 
         for (int i = 0; i < max_bullets; i++)
@@ -85,13 +84,13 @@ void Player::update()
     }
 }
 
-void Player::render()
+void Player::render(Texture2D player_texture, Texture2D bullet_texture)
 {
     Vector2 position = Vector2(75 / 2, 75 / 2);
     Rectangle source = Rectangle(0, 0, 98, 75);
-    Rectangle dest = Rectangle((GetScreenWidth() / 2) - (0 / 2), (GetScreenHeight() / 2) - (0 / 2), 75, 75);
+    Rectangle dest = Rectangle((float)(GetScreenWidth() / 2), (float)(GetScreenHeight() / 2), 75, 75);
 
-    DrawTexturePro(texture, source, dest, position, rotation, WHITE);
+    DrawTexturePro(player_texture, source, dest, position, rotation, WHITE);
 
     // Draw shoot
     for (int i = 0; i < max_bullets; i++)
@@ -100,6 +99,6 @@ void Player::render()
         Rectangle bullet_source = Rectangle(0, 0, 48, 46);
         Rectangle bullet_dest = Rectangle(bullets[i].position.x, bullets[i].position.y, 32, 32);
 
-        if (bullets[i].active) DrawTexturePro(texture_bullets, bullet_source, bullet_dest, bullet_position, rotation, WHITE);
+        if (bullets[i].active) DrawTexturePro(bullet_texture, bullet_source, bullet_dest, bullet_position, rotation, WHITE);
     }
 }

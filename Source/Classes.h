@@ -24,14 +24,12 @@ class Player
 		int max_bullets = 20;
 		Bullet bullets[20] = { };
 		Color color = RAYWHITE;
-		Texture2D texture;
-		Texture2D texture_bullets;
 
 		virtual ~Player() = default;
 
 		virtual void initialize();
-		virtual void update();
-		virtual void render();
+		virtual void update(Sound shooting_sound);
+		virtual void render(Texture2D player_texture, Texture2D bullet_texture);
 };
 
 enum Size { big, medium, small };
@@ -46,11 +44,10 @@ class Asteroid
 		Vector2 speed = {};
 		float radius = {};
 		Size size = Size::big;
-		Texture2D texture;
 		float rotation;
 
 		void update();
-		void render();
+		void render(Texture2D asteroid_texture);
 };
 
 enum class State
@@ -70,7 +67,6 @@ class Level
 {
 	public:
 		Player player = {};
-		Vector2 size;
 		float time_from_start = 0;
 		const int asteroid_speed = 2;
 		int score = 0;
@@ -78,8 +74,8 @@ class Level
 		virtual ~Level() = default;
 
 		void reset();
-		void update(GameState* state);
-		void render();
+		void update(GameState* state, Sound sounds[1]);
+		void render(Texture2D textures[3]);
 
 		//Asteroids
 		std::vector<Asteroid> big_asteroids;

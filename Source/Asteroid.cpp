@@ -20,10 +20,9 @@ Asteroid::Asteroid(Vector2 _position, Vector2 _speed, float _radius, Size _size)
 	this->radius = _radius;
 	this->size = _size;
 	this->rotation = GetRandomValue(0, 360);
-	this->texture = LoadTexture("Assets/Asteroid.png");
 }
 
-void Asteroid::render()
+void Asteroid::render(Texture2D asteroid_texture)
 {
 	switch (size)
 	{
@@ -36,7 +35,7 @@ void Asteroid::render()
 			Rectangle source = Rectangle(0, 0, 101, 84);
 			Rectangle dest = Rectangle(position.x, position.y, size, size);
 
-			DrawTexturePro(texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
+			DrawTexturePro(asteroid_texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
 
 			break;
 		}
@@ -48,7 +47,7 @@ void Asteroid::render()
 			Rectangle source = Rectangle(0, 0, 101, 84);
 			Rectangle dest = Rectangle(position.x, position.y, size, size);
 
-			DrawTexturePro(texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
+			DrawTexturePro(asteroid_texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
 			break;
 		}
 		case small:
@@ -60,7 +59,7 @@ void Asteroid::render()
 			Rectangle dest = Rectangle(position.x, position.y, size, size);
 
 			//DrawCircleV(position, radius, RED);
-			DrawTexturePro(texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
+			DrawTexturePro(asteroid_texture, source, dest, Vector2(half_size, half_size), rotation, WHITE);
 			break;
 		}
 	}
